@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0b2545">
+<title>Cahier de Cotation 2026-2027 — CS Saint Gabriel II</title>
+<style>
+:root{
+  --navy:#0b2545;
+  --navy2:#13315c;
+  --gold:#c9a227;
+  --gold2:#e6c458;
+  --bg:#eef2f7;
+  --line:#dbe3ee;
+  --txt:#12233b;
+  --muted:#6b7c93;
+  --danger:#c0392b;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0;padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  background:var(--bg);color:var(--txt);overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+  user-select:none;
+}
+button{font-family:inherit;border:none;background:none;color:inherit;cursor:pointer}
+input,textarea{font-family:inherit}
+
+.app{position:fixed;inset:0;overflow:hidden}
+
+/* ---------- ÉCRANS ---------- */
+.screen{
+  position:absolute;inset:0;display:flex;flex-direction:column;background:var(--bg);
+  transform:translateX(100%);
+  transition:transform .3s cubic-bezier(.4,0,.2,1);
+  will-change:transform;
+}
+.screen.active{transform:translateX(0)}
+
+/* ---------- ACCUEIL ---------- */
+.home{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+  padding:calc(26px + env(safe-area-inset-top)) 22px calc(22px + env(safe-area-inset-bottom));
+  background:radial-gradient(circle at 50% -10%, #1d4577 0%, #0b2545 55%, #061529 100%);
+  color:#fff;text-align:center;position:relative;overflow:hidden;
+}
+.home::before{
+  content:"";position:absolute;width:340px;height:340px;border-radius:50%;
+  border:1px solid rgba(201,162,39,.18);top:-140px;right:-120px;
+}
+.home::after{
+  content:"";position:absolute;width:260px;height:260px;border-radius:50%;
+  border:1px solid rgba(201,162,39,.12);bottom:-110px;left:-100px;
+}
+.home-top,.home-mid,.home-bottom{position:relative;z-index:2;width:100%}
+.crest{
+  width:74px;height:74px;margin:0 auto 14px;border-radius:50%;
+  display:grid;place-items:center;
+  background:linear-gradient(145deg,#1b3f70,#0b2545);
+  border:2px solid var(--gold);
+  color:var(--gold2);font-weight:800;font-size:22px;letter-spacing:1px;
+  box-shadow:0 8px 24px rgba(0,0,0,.35), inset 0 0 18px rgba(201,162,39,.18);
+}
+.school{
+  margin:0;font-size:13.5px;font-weight:700;letter-spacing:2.2px;line-height:1.5;
+  color:#dbe6f5;
+}
+.home-mid{padding:6px 0}
+.rule{height:1px;background:linear-gradient(90deg,transparent,rgba(201,162,39,.75),transparent);margin:16px auto;width:78%}
+.big{
+  margin:0;font-size:clamp(30px,9.5vw,44px);font-weight:900;line-height:1.08;
+  letter-spacing:3px;color:#ffffff;
+  text-shadow:0 4px 18px rgba(0,0,0,.45);
+}
+.big span{color:var(--gold2)}
+.year{
+  margin-top:14px;font-size:17px;font-weight:800;letter-spacing:6px;color:var(--gold2);
+}
+.home-sub{margin-top:8px;font-size:11px;letter-spacing:2px;color:rgba(219,230,245,.65);text-transform:uppercase}
+.btn-enter{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  width:100%;max-width:300px;margin:0 auto;
+  padding:17px 28px;border-radius:60px;
+  background:linear-gradient(145deg,#e6c458,#c9a227);
+  color:#0b2545;font-size:16px;font-weight:900;letter-spacing:2px;
+  box-shadow:0 12px 30px rgba(201,162,39,.35), 0 3px 0 #8f7318;
+  transition:transform .12s;
+}
+.btn-enter:active{transform:translateY(2px);box-shadow:0 6px 16px rgba(201,162,39,.3)}
+.btn-enter span{font-size:22px;line-height:0;margin-top:-2px}
+.prof{margin:16px 0 0;font-size:11.5px;letter-spacing:1.5px;color:rgba(219,230,245,.7)}
+
+/* ---------- BARRE SUPÉRIEURE ---------- */
+.topbar{
+  display:flex;align-items:center;gap:8px;
+  padding:calc(10px + env(safe-area-inset-top)) 12px 10px;
+  background:linear-gradient(180deg,#13315c,#0b2545);
+  color:#fff;box-shadow:0 3px 14px rgba(11,37,69,.28);
+  position:relative;z-index:20;
+}
+.topbar-title{
+  flex:1;font-size:15px;font-weight:800;letter-spacing:.6px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  text-align:center;padding:0 2px;
+}
+.icon-btn{
+  width:38px;height:38px;flex:0 0 auto;border-radius:12px;display:grid;place-items:center;
+  font-size:18px;background:rgba(255,255,255,.11);color:#fff;transition:background .15s;
+}
+.icon-btn:active{background:rgba(255,255,255,.26)}
+
+/* ---------- LISTE DES CLASSES ---------- */
+.search{padding:10px 12px;background:#0b2545}
+.search input{
+  width:100%;padding:12px 15px;border-radius:12px;border:none;outline:none;
+  background:rgba(255,255,255,.13);color:#fff;font-size:15px;
+}
+.search input::placeholder{color:rgba(255,255,255,.55)}
+.list{
+  flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  padding:12px 12px calc(22px + env(safe-area-inset-bottom));
+}
+.cls{
+  display:flex;align-items:center;gap:12px;width:100%;text-align:left;
+  background:#fff;border-radius:15px;padding:13px 14px;margin-bottom:9px;
+  border:1px solid #e6edf6;box-shadow:0 1px 3px rgba(16,36,64,.07);
+  transition:transform .1s, background .1s;
+}
+.cls:active{transform:scale(.985);background:#f7fafd}
+.cls-badge{
+  width:44px;height:44px;flex:0 0 auto;border-radius:13px;
+  display:grid;place-items:center;
+  background:linear-gradient(145deg,#1b3f70,#0b2545);
+  color:var(--gold2);font-weight:900;font-size:12.5px;letter-spacing:.4px;
+}
+.cls-body{flex:1;min-width:0}
+.cls-name{font-weight:800;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cls-sub{font-size:11.5px;color:var(--muted);margin-top:3px}
+.chev{color:#c3cfdf;font-size:22px;font-weight:300}
+
+/* ---------- FICHE ---------- */
+.strip{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  padding:9px 14px;background:#fff;border-bottom:1px solid var(--line);
+  font-size:11.5px;color:var(--muted);font-weight:600;
+}
+.strip b{color:var(--navy)}
+.sheet-body{flex:1;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.table-wrap{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;background:#fff}
+table{
+  border-collapse:separate;border-spacing:0;table-layout:fixed;width:588px;
+  font-size:12.5px;
+}
+th,td{
+  height:42px;padding:0;text-align:center;background:#fff;
+  border-right:1px solid #e6ecf4;border-bottom:1px solid #e6ecf4;
+}
+thead th{
+  position:sticky;top:0;z-index:3;height:40px;
+  background:linear-gradient(180deg,#1b3f70,#13315c);color:#fff;
+  font-size:10px;font-weight:800;letter-spacing:.3px;line-height:1.1;
+  padding:0 2px;
+}
+thead th small{display:block;font-size:8.5px;font-weight:500;opacity:.6;margin-top:1px}
+.c-num{
+  position:sticky;left:0;z-index:2;width:34px;
+  background:#f4f7fb;color:#8a9bb2;font-size:11px;font-weight:800;
+}
+.c-nom{
+  position:sticky;left:34px;z-index:2;
+  background:#fff;text-align:left;padding:0 8px;
+  font-size:11.5px;font-weight:700;color:#1a2f4d;
+  box-shadow:2px 0 0 #e6ecf4;
+}
+thead th.c-num,thead th.c-nom{z-index:8;background:#13315c;color:#fff;box-shadow:none}
+thead th.c-nom{box-shadow:2px 0 0 #0b2545}
+.sname{
+  display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  cursor:pointer;
+}
+tbody tr:active .sname{color:var(--navy2)}
+td input.g{
+  width:100%;height:100%;border:none;outline:none;background:transparent;
+  text-align:center;font-size:16px;font-weight:700;color:#0b2545;padding:0;border-radius:0;
+}
+td input.g:focus{background:#fff8e1;box-shadow:inset 0 0 0 2px var(--gold)}
+td input.g::-webkit-outer-spin-button,
+td input.g::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+td input.g{-moz-appearance:textfield;appearance:textfield}
+td.tot{font-weight:900;color:#1b3f70;background:#f2f6fc;font-size:12.5px}
+td.tg{font-weight:900;color:#0b2545;background:#e6effa;font-size:13px}
+.empty{
+  position:absolute;inset:0;background:#fff;display:none;
+  place-items:center;text-align:center;padding:30px;color:var(--muted);
+}
+.empty.show{display:grid}
+.empty .ico{font-size:44px;opacity:.35;margin-bottom:12px}
+.empty h3{margin:0 0 6px;color:var(--navy);font-size:15px}
+.empty p{margin:0;font-size:12.5px;line-height:1.6;max-width:250px}
+
+/* ---------- MODALES ---------- */
+.overlay{
+  position:fixed;inset:0;z-index:120;display:none;
+  align-items:flex-end;background:rgba(5,16,32,.55);
+  backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+}
+.overlay.show{display:flex}
+.modal{
+  width:100%;max-height:90vh;overflow-y:auto;background:#fff;
+  border-radius:22px 22px 0 0;
+  padding-bottom:calc(18px + env(safe-area-inset-bottom));
+  animation:slideUp .26s cubic-bezier(.2,.8,.3,1);
+}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 18px 12px;border-bottom:1px solid var(--line);
+  font-weight:800;font-size:15.5px;color:var(--navy);
+  position:sticky;top:0;background:#fff;border-radius:22px 22px 0 0;z-index:2;
+}
+.x{
+  width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
+  background:#eef2f7;color:#5a6b82;font-size:15px;
+}
+.modal-body{padding:16px 18px 4px}
+.lbl{display:block;font-size:11.5px;font-weight:800;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;margin:0 0 7px 2px}
+.field{
+  width:100%;padding:14px;border-radius:13px;border:1.6px solid var(--line);
+  background:#f8fafc;font-size:16px;color:var(--txt);outline:none;
+  transition:border-color .15s, background .15s;
+}
+.field:focus{border-color:var(--navy2);background:#fff}
+textarea.field{resize:none;line-height:1.5;font-size:15px}
+.sep{
+  display:flex;align-items:center;gap:12px;margin:20px 0 14px;
+  color:#9aa9bd;font-size:11px;font-weight:700;letter-spacing:1px;
+}
+.sep::before,.sep::after{content:"";flex:1;height:1px;background:var(--line)}
+.btn-primary{
+  width:100%;padding:15px;border-radius:13px;
+  background:linear-gradient(145deg,#1b3f70,#0b2545);color:#fff;
+  font-size:14.5px;font-weight:800;letter-spacing:.4px;
+  box-shadow:0 4px 14px rgba(11,37,69,.22);
+}
+.btn-primary:active{opacity:.86;transform:translateY(1px)}
+.btn-outline{
+  width:100%;padding:14px;border-radius:13px;background:#fff;
+  border:1.6px solid var(--navy2);color:var(--navy2);
+  font-size:14px;font-weight:800;
+}
+.btn-outline:active{background:#f1f5fa}
+.btn-danger{
+  width:100%;padding:14px;border-radius:13px;
+  background:#fdecea;color:var(--danger);font-size:14px;font-weight:800;
+}
+.btn-danger:active{background:#fbdcd7}
+.row-btns{display:flex;gap:10px;margin-top:20px}
+.mt14{margin-top:14px}
+.menu-item{
+  display:flex;align-items:center;gap:14px;width:100%;text-align:left;
+  padding:15px 4px;border-bottom:1px solid var(--line);
+  font-size:14.5px;font-weight:600;color:var(--txt);
+}
+.menu-item:last-child{border-bottom:none}
+.menu-item .mi-ico{
+  width:38px;height:38px;flex:0 0 auto;border-radius:11px;display:grid;place-items:center;
+  background:#eef3fa;font-size:17px;
+}
+.menu-item small{display:block;font-weight:500;font-size:11px;color:var(--muted);margin-top:2px}
+
+/* ---------- COEFFICIENTS ---------- */
+.coef-section{margin-bottom:22px}
+.coef-section:last-child{margin-bottom:0}
+.coef-head{
+  display:flex;align-items:center;gap:8px;margin:0 0 12px 2px;
+  font-size:12px;font-weight:800;color:var(--navy2);letter-spacing:.8px;text-transform:uppercase;
+}
+.coef-head::before{
+  content:"";width:4px;height:16px;border-radius:2px;
+  background:linear-gradient(180deg,var(--gold),#8f7318);
+}
+.coef-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.coef-cell label{
+  display:block;font-size:10.5px;font-weight:700;color:var(--muted);
+  text-align:center;margin-bottom:6px;letter-spacing:.3px;
+}
+.coef-cell input{
+  width:100%;padding:12px 6px;border-radius:11px;border:1.6px solid var(--line);
+  background:#f8fafc;font-size:17px;font-weight:800;color:var(--navy);
+  text-align:center;outline:none;
+}
+.coef-cell input:focus{border-color:var(--gold);background:#fffdf5}
+.coef-hint{
+  font-size:11px;color:var(--muted);line-height:1.55;
+  background:#f4f8fd;border-radius:11px;padding:11px 13px;
+  border-left:3px solid var(--navy2);margin-top:14px;
+}
+.coef-total{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:11px 14px;border-radius:11px;background:#eef4fc;
+  font-size:12.5px;font-weight:700;color:var(--navy2);margin-top:14px;
+}
+.coef-total b{color:var(--navy);font-size:14px}
+
+/* ---------- TOAST ---------- */
+#toast{
+  position:fixed;left:50%;bottom:calc(28px + env(safe-area-inset-bottom));
+  transform:translate(-50%,18px);opacity:0;pointer-events:none;
+  background:rgba(11,37,69,.96);color:#fff;padding:12px 20px;border-radius:40px;
+  font-size:13px;font-weight:600;z-index:400;transition:.25s;white-space:nowrap;
+  box-shadow:0 8px 24px rgba(0,0,0,.3);
+}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ================= ACCUEIL ================= -->
+  <section id="screen-home" class="screen active">
+    <div class="home">
+      <div class="home-top">
+        <div class="crest">SG</div>
+        <h1 class="school">COMPLEXE SCOLAIRE<br>SAINT GABRIEL II</h1>
+      </div>
+
+      <div class="home-mid">
+        <div class="rule"></div>
+        <h2 class="big">CAHIER DE<br><span>COTATION</span></h2>
+        <div class="year">2026 – 2027</div>
+        <div class="home-sub">Gestion des points annuelle</div>
+        <div class="rule"></div>
+      </div>
+
+      <div class="home-bottom">
+        <button class="btn-enter" onclick="openClasses()">ENTRER <span>›</span></button>
+        <p class="prof">Prof. Steves ILUNGA</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CLASSES ================= -->
+  <section id="screen-classes" class="screen">
+    <header class="topbar">
+      <button class="icon-btn" onclick="goHome()">‹</button>
+      <div class="topbar-title">Fiches de cotation</div>
+      <button class="icon-btn" onclick="openMenu()">⋯</button>
+    </header>
+    <div class="search">
+      <input id="search" type="search" placeholder="Rechercher une classe…" oninput="renderClasses()">
+    </div>
+    <div class="list" id="classList"></div>
+  </section>
+
+  <!-- ================= FICHE ================= -->
+  <section id="screen-sheet" class="screen">
+    <header class="topbar">
+      <button class="icon-btn" onclick="goClasses()">‹</button>
+      <button class="icon-btn" onclick="openCoef()" title="Coefficients / Maximums">⚙</button>
+      <div class="topbar-title" id="sheetTitle">CLASSE</div>
+      <button class="icon-btn" onclick="printClass()" title="Imprimer la fiche">🖨</button>
+      <button class="icon-btn" onclick="openAdd()" title="Ajouter un élève">＋</button>
+    </header>
+
+    <div class="strip">
+      <span id="stripCount">0 élève</span>
+      <span id="stripAvg">Moyenne : —</span>
+    </div>
+
+    <div class="sheet-body">
+      <div class="table-wrap">
+        <table>
+          <colgroup>
+            <col style="width:34px"><col style="width:122px">
+            <col style="width:48px"><col style="width:48px"><col style="width:48px"><col style="width:48px">
+            <col style="width:48px"><col style="width:48px"><col style="width:48px"><col style="width:48px">
+            <col style="width:48px">
+          </colgroup>
+          <thead>
+            <tr id="theadRow"></tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="empty" id="emptyState">
+        <div>
+          <div class="ico">📋</div>
+          <h3>Aucun élève dans cette classe</h3>
+          <p>Appuyez sur le bouton <b>＋</b> en haut à droite pour ajouter des élèves.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ================= MODALE : AJOUT ================= -->
+<div class="overlay" id="addOverlay" onclick="if(event.target===this)closeModal('addOverlay')">
+  <div class="modal">
+    <div class="modal-head">
+      <span>Ajouter des élèves</span>
+      <button class="x" onclick="closeModal('addOverlay')">✕</button>
+    </div>
+    <div class="modal-body">
+      <label class="lbl">Nom complet de l'élève</label>
+      <input id="newName" class="field" type="text" placeholder="Ex : KOLOLO KABEYA" autocomplete="off">
+      <button class="btn-primary mt14" onclick="addOne()">Ajouter l'élève</button>
+
+      <div class="sep">OU</div>
+
+      <label class="lbl">Liste de noms (un par ligne)</label>
+      <textarea id="bulkNames" class="field" rows="5"
+        placeholder="KOLOLO KABEYA&#10;ABERI MABENGA&#10;ADAMASHI OMBA"></textarea>
+      <button class="btn-outline mt14" onclick="addBulk()">Importer la liste</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MODALE : ÉLÈVE ================= -->
+<div class="overlay" id="studentOverlay" onclick="if(event.target===this)closeModal('studentOverlay')">
+  <div class="modal">
+    <div class="modal-head">
+      <span>Modifier l'élève</span>
+      <button class="x" onclick="closeModal('studentOverlay')">✕</button>
+    </div>
+    <div class="modal-body">
+      <label class="lbl">Nom complet</label>
+      <input id="editName" class="field" type="text" autocomplete="off">
+      <div class="row-btns">
+        <button class="btn-danger" onclick="deleteStudent()">Supprimer</button>
+        <button class="btn-primary" onclick="saveStudent()">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MODALE : COEFFICIENTS ================= -->
+<div class="overlay" id="coefOverlay" onclick="if(event.target===this)closeModal('coefOverlay')">
+  <div class="modal">
+    <div class="modal-head">
+      <span>Coefficients / Maximums</span>
+      <button class="x" onclick="closeModal('coefOverlay')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="margin:0 0 18px 2px;font-size:12.5px;color:var(--muted);line-height:1.55">
+        Définissez pour cette classe le <b>maximum</b> (coefficient) de chaque période et examen.
+        Les totaux et la moyenne s'ajustent automatiquement.
+      </p>
+
+      <div class="coef-section">
+        <div class="coef-head">1er Semestre</div>
+        <div class="coef-grid">
+          <div class="coef-cell">
+            <label>1è P</label>
+            <input id="cP1" type="number" inputmode="decimal" min="0" step="1">
+          </div>
+          <div class="coef-cell">
+            <label>2è P</label>
+            <input id="cP2" type="number" inputmode="decimal" min="0" step="1">
+          </div>
+          <div class="coef-cell">
+            <label>Examen</label>
+            <input id="cE1" type="number" inputmode="decimal" min="0" step="1">
+          </div>
+        </div>
+        <div class="coef-total"><span>Total max. 1er semestre</span><b id="cT1">40</b></div>
+      </div>
+
+      <div class="coef-section">
+        <div class="coef-head">2ème Semestre</div>
+        <div class="coef-grid">
+          <div class="coef-cell">
+            <label>3è P</label>
+            <input id="cP3" type="number" inputmode="decimal" min="0" step="1">
+          </div>
+          <div class="coef-cell">
+            <label>4è P</label>
+            <input id="cP4" type="number" inputmode="decimal" min="0" step="1">
+          </div>
+          <div class="coef-cell">
+            <label>Examen</label>
+            <input id="cE2" type="number" inputmode="decimal" min="0" step="1">
+          </div>
+        </div>
+        <div class="coef-total"><span>Total max. 2ème semestre</span><b id="cT2">40</b></div>
+      </div>
+
+      <div class="coef-total" style="background:#0b2545;color:#fff;margin-top:18px">
+        <span style="color:rgba(255,255,255,.75)">Maximum annuel (T.G)</span>
+        <b id="cTG" style="color:var(--gold2)">80</b>
+      </div>
+
+      <div class="coef-hint">
+        Les valeurs par défaut correspondent au barème 10 / 10 / 20 par semestre (total 80).
+        Modifiez-les selon votre barème réel.
+      </div>
+
+      <div class="row-btns">
+        <button class="btn-outline" onclick="resetCoef()">Valeurs par défaut</button>
+        <button class="btn-primary" onclick="saveCoef()">Appliquer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MODALE : MENU ================= -->
+<div class="overlay" id="menuOverlay" onclick="if(event.target===this)closeModal('menuOverlay')">
+  <div class="modal">
+    <div class="modal-head">
+      <span>Options</span>
+      <button class="x" onclick="closeModal('menuOverlay')">✕</button>
+    </div>
+    <div class="modal-body" style="padding-bottom:18px">
+      <button class="menu-item" onclick="exportData()">
+        <span class="mi-ico">💾</span>
+        <span>Exporter la sauvegarde<small>Fichier .json de toutes les notes</small></span>
+      </button>
+      <button class="menu-item" onclick="document.getElementById('importFile').click()">
+        <span class="mi-ico">📥</span>
+        <span>Importer une sauvegarde<small>Restaurer un fichier .json</small></span>
+      </button>
+      <button class="menu-item" onclick="resetAll()">
+        <span class="mi-ico">🗑️</span>
+        <span style="color:var(--danger)">Tout effacer<small>Supprime définitivement toutes les données</small></span>
+      </button>
+      <input type="file" id="importFile" accept=".json,application/json" style="display:none" onchange="importData(this)">
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* ======================================================
+   DONNÉES
+====================================================== */
+const STORAGE_KEY = 'csg2_cotation_2026_2027_v2';
+
+const CLASSES = [
+  {name:'7ème EB A',              short:'7A'},
+  {name:'7ème EB B',              short:'7B'},
+  {name:'8ème EB A',              short:'8A'},
+  {name:'8ème EB B',              short:'8B'},
+  {name:'1ère SCIENTIFIQUE',      short:'1S'},
+  {name:'1ère PÉDAGOGIE',         short:'1P'},
+  {name:'1ère LITTÉRAIRE',        short:'1L'},
+  {name:'1ère COUPE ET COUTURE',  short:'1C'},
+  {name:'1ère COMMERCIALE',       short:'1Co'},
+  {name:'2ème SCIENTIFIQUE',      short:'2S'},
+  {name:'2ème PÉDAGOGIE',         short:'2P'},
+  {name:'2ème LITTÉRAIRE',        short:'2L'},
+  {name:'2ème COUPE ET COUTURE',  short:'2C'},
+  {name:'2ème COMMERCIALE',       short:'2Co'},
+  {name:'3ème SCIENTIFIQUE',      short:'3S'},
+  {name:'3ème PÉDAGOGIE',         short:'3P'},
+  {name:'3ème LITTÉRAIRE',        short:'3L'},
+  {name:'3ème COUPE ET COUTURE',  short:'3C'},
+  {name:'3ème COMMERCIALE',       short:'3Co'},
+  {name:'4ème SCIENTIFIQUE',      short:'4S'},
+  {name:'4ème PÉDAGOGIE',         short:'4P'},
+  {name:'4ème LITTÉRAIRE',        short:'4L'},
+  {name:'4ème COUPE ET COUTURE',  short:'4C'},
+  {name:'4ème COMMERCIALE',       short:'4Co'}
+];
+
+/* Barème par défaut : 10 / 10 / 20 par semestre */
+const DEFAULT_COEF = { p1:10, p2:10, e1:20, p3:10, p4:10, e2:20 };
+
+/* ======================================================
+   NOMS DÉJÀ PRÉSENTS DANS LE FICHIER EXCEL
+====================================================== */
+const INITIAL_STUDENTS = {
+  '8ème EB A': [
+    'KOLOLO KABEYA','ABERI MABENGA','ADAMASHI OMBA','AMOSHI BUKAKA',
+    'BILINGA ISOLI','BITESO NZUBILA','BULELA MUDIANGOMBA','EKUTHU MANZINGU',
+    'ELONGA KASIALA','ETOKO KEMA','FIZA WABA','ILONGO AYINSOL',
+    'KAMBALA KASONGO','KIMANGA MUYEBA','KISIDIKA MORINO','KUTUKA KIESE',
+    'LUAMBUA MUKENA','LUBONGO MUNDANDA','MAMBO LUKOKI','MASABI KEMBO',
+    'MASALASI LUPERE','MATHANG ONZIES','MAYAMBA MUJINGA','MBUELOMBO BAKEKE',
+    'MUKALA TSHIBANGU','MUKOKO MASUNGU','MUNANGA KASHALA','MUNZO MAFUTA',
+    'MUTENDA MUENJI','NDAOMBE ATI','OLIME ANIME','SOMPO KABEYA',
+    'TSHIMANGA WA TSHIMANGA','TSHISUNGU MUKINAYI'
+  ],
+  '8ème EB B': [
+    'MBIYE MBIYE','BAMWENE YAKISADILA','IMPIA BOBE','IYANZA NGALO',
+    'KABELENGENZE KITUNDU','KABONGO TSHINZA','KALALA MALOBA','KALENGA MUTEBA',
+    'KAMBAMBA GAZUNDA','KAZAADI NTUMBA','KIBABU KONA','KINGONGO FUNDA',
+    'KONGOLO KALALA','KUMBI MAMBUANNA','KUPANI MAMBULU','KWEZITUKA MPANGI',
+    'LEBUNAY MOTA','LINGO ASSOSSA','MABOKO TAKALBI','MAGILA FOTO',
+    'MAMOSHI KAKESA','MATONDO SIWAMBANZA','MBITAMBULA ALANGI','MBIYE JOSAPHAT',
+    'MBUELOMBO EMOMBA','MITECEJI NGOYI','MOMBOLO NGANDIRI','MUAKA KABENGELE',
+    'MWIMBO BANGALA','NDUTU MAYAMBA','NTUMBA BUYAMBA','NZUKOSO BELESI',
+    'TSHAKA KANZI','TSHILANDA KAZADI','TSHISUMPA TSHISUMPA','TUZOLANA KIMPUNGI'
+  ],
+  '1ère SCIENTIFIQUE': [
+    'MUKWALA MAYEKA','KITENGE NGOSOU','KAPUNGA KASIAMA','LUKALU MWANAMUENI',
+    'MONSENGO OMPIA','MBIMBA MAKENGO','MWANZA KALANGA','DIMANDJA PENASHE',
+    'MUKOMA GAMBEMBO','MUSAWU KANEKA','LUPEMBA MBANGU','LUZOLO MAYALA',
+    'MAFUTA TABITA','MATOBO MAMBILA','MBAMA SAKOULI','MBUYI KIKUDI',
+    'MBUYI MUKOKO','MPAKA AGAMBA','MUKWETE BIYE','TSHIBANGU TAMBWE',
+    'WETSHI MIBA'
+  ]
+};
+
+let state = null;
+let currentClass = null;
+let editingId = null;
+
+/* ======================================================
+   UTILITAIRES
+====================================================== */
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,8);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const num = v => (typeof v === 'number' && !isNaN(v)) ? v : 0;
+const fmt = v => {
+  if(v === null || v === undefined || v === '') return '';
+  const n = parseFloat(v);
+  if(isNaN(n)) return '';
+  return (Math.round(n * 100) / 100).toString();
+};
+
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._h);
+  t._h = setTimeout(() => t.classList.remove('show'), 1900);
+}
+
+/* ======================================================
+   STOCKAGE
+====================================================== */
+function loadState(){
+  let data = null;
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw) data = JSON.parse(raw);
+  }catch(e){ data = null; }
+
+  if(!data || typeof data !== 'object' || !data.classes){
+    /* ---------- Premier lancement : on charge les noms du fichier Excel ---------- */
+    data = { classes: {} };
+    CLASSES.forEach(c => {
+      const names = INITIAL_STUDENTS[c.name] || [];
+      data.classes[c.name] = {
+        coef: { ...DEFAULT_COEF },
+        students: names.map(n => ({
+          id: uid(), name: n,
+          p1: null, p2: null, e1: null,
+          p3: null, p4: null, e2: null
+        }))
+      };
+    });
+  } else {
+    /* ---------- Migration : on s'assure que chaque classe a un coef ---------- */
+    CLASSES.forEach(c => {
+      if(!data.classes[c.name] || typeof data.classes[c.name] !== 'object'){
+        data.classes[c.name] = { coef:{ ...DEFAULT_COEF }, students: [] };
+      }
+      const cls = data.classes[c.name];
+      if(!Array.isArray(cls.students)) cls.students = [];
+      if(!cls.coef || typeof cls.coef !== 'object'){
+        cls.coef = { ...DEFAULT_COEF };
+      } else {
+        ['p1','p2','e1','p3','p4','e2'].forEach(k => {
+          const v = parseFloat(cls.coef[k]);
+          cls.coef[k] = (isNaN(v) || v < 0) ? DEFAULT_COEF[k] : v;
+        });
+      }
+    });
+  }
+  return data;
+}
+
+function save(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+  catch(e){ toast('Erreur de sauvegarde'); }
+}
+
+/* ======================================================
+   CALCULS
+====================================================== */
+function getCoef(clsName){
+  const c = state.classes[clsName].coef || DEFAULT_COEF;
+  return {
+    p1: num(c.p1), p2: num(c.p2), e1: num(c.e1),
+    p3: num(c.p3), p4: num(c.p4), e2: num(c.e2)
+  };
+}
+
+function maxTotals(clsName){
+  const c = getCoef(clsName);
+  const max1 = c.p1 + c.p2 + c.e1;
+  const max2 = c.p3 + c.p4 + c.e2;
+  return { max1, max2, maxTG: max1 + max2 };
+}
+
+function totals(s){
+  const t1 = num(s.p1) + num(s.p2) + num(s.e1);
+  const t2 = num(s.p3) + num(s.p4) + num(s.e2);
+  return { t1, t2, tg: t1 + t2 };
+}
+
+function classAverage(students){
+  const vals = students.map(s => totals(s).tg).filter(v => v > 0);
+  if(!vals.length) return null;
+  return vals.reduce((a,b) => a + b, 0) / vals.length;
+}
+
+/* ======================================================
+   NAVIGATION
+====================================================== */
+function show(id){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function goHome(){ show('screen-home'); }
+function goClasses(){ closeModal('menuOverlay'); renderClasses(); show('screen-classes'); }
+
+function openClasses(){
+  renderClasses();
+  show('screen-classes');
+}
+
+function openClass(name){
+  currentClass = name;
+  renderSheet();
+  show('screen-sheet');
+}
+
+/* ======================================================
+   ÉCRAN : LISTE DES CLASSES
+====================================================== */
+function renderClasses(){
+  const q = (document.getElementById('search').value || '').toLowerCase().trim();
+  const box = document.getElementById('classList');
+  box.innerHTML = '';
+
+  let count = 0;
+  CLASSES.forEach(c => {
+    if(q && !c.name.toLowerCase().includes(q)) return;
+    count++;
+
+    const st = state.classes[c.name].students;
+    const avg = classAverage(st);
+    const mt = maxTotals(c.name);
+
+    const el = document.createElement('button');
+    el.className = 'cls';
+    el.innerHTML =
+      '<div class="cls-badge">' + esc(c.short) + '</div>' +
+      '<div class="cls-body">' +
+        '<div class="cls-name">' + esc(c.name) + '</div>' +
+        '<div class="cls-sub">' + st.length + ' élève' + (st.length > 1 ? 's' : '') +
+        (avg !== null ? '  •  Moyenne ' + avg.toFixed(1) + ' / ' + mt.maxTG : '') + '</div>' +
+      '</div>' +
+      '<div class="chev">›</div>';
+    el.onclick = () => openClass(c.name);
+    box.appendChild(el);
+  });
+
+  if(count === 0){
+    box.innerHTML = '<div style="text-align:center;color:#8a9bb2;padding:40px 20px;font-size:13.5px">Aucune classe trouvée</div>';
+  }
+}
+
+/* ======================================================
+   ÉCRAN : FICHE DE COTATION
+====================================================== */
+function cellInput(s, field){
+  const v = (s[field] === null || s[field] === undefined || s[field] === '') ? '' : s[field];
+  return '<input class="g" data-f="' + field + '" type="number" inputmode="decimal" step="0.5" value="' + v + '">';
+}
+
+function renderHeader(){
+  const coef = getCoef(currentClass);
+  const mt = maxTotals(currentClass);
+
+  document.getElementById('theadRow').innerHTML =
+    '<th class="c-num">N°</th>' +
+    '<th class="c-nom">NOMS</th>' +
+    '<th>1è P<small>/' + fmt(coef.p1) + '</small></th>' +
+    '<th>2è P<small>/' + fmt(coef.p2) + '</small></th>' +
+    '<th>EXA<small>/' + fmt(coef.e1) + '</small></th>' +
+    '<th>TOT<small>/' + fmt(mt.max1) + '</small></th>' +
+    '<th>3è P<small>/' + fmt(coef.p3) + '</small></th>' +
+    '<th>4è P<small>/' + fmt(coef.p4) + '</small></th>' +
+    '<th>EXA<small>/' + fmt(coef.e2) + '</small></th>' +
+    '<th>TOT<small>/' + fmt(mt.max2) + '</small></th>' +
+    '<th>T.G<small>/' + fmt(mt.maxTG) + '</small></th>';
+}
+
+function renderSheet(){
+  const students = state.classes[currentClass].students;
+  document.getElementById('sheetTitle').textContent = currentClass;
+
+  renderHeader();
+
+  const tb = document.getElementById('tbody');
+  tb.innerHTML = students.map((s, i) => {
+    const t = totals(s);
+    return '<tr data-id="' + s.id + '">' +
+      '<td class="c-num">' + (i + 1) + '</td>' +
+      '<td class="c-nom"><span class="sname" data-id="' + s.id + '">' + esc(s.name) + '</span></td>' +
+      '<td>' + cellInput(s,'p1') + '</td>' +
+      '<td>' + cellInput(s,'p2') + '</td>' +
+      '<td>' + cellInput(s,'e1') + '</td>' +
+      '<td class="tot" data-t="t1">' + fmt(t.t1) + '</td>' +
+      '<td>' + cellInput(s,'p3') + '</td>' +
+      '<td>' + cellInput(s,'p4') + '</td>' +
+      '<td>' + cellInput(s,'e2') + '</td>' +
+      '<td class="tot" data-t="t2">' + fmt(t.t2) + '</td>' +
+      '<td class="tg" data-t="tg">' + fmt(t.tg) + '</td>' +
+    '</tr>';
+  }).join('');
+
+  document.getElementById('emptyState').classList.toggle('show', students.length === 0);
+  updateStrip();
+}
+
+function updateStrip(){
+  const students = state.classes[currentClass].students;
+  document.getElementById('stripCount').textContent =
+    students.length + ' élève' + (students.length > 1 ? 's' : '');
+
+  const avg = classAverage(students);
+  const mt = maxTotals(currentClass);
+  document.getElementById('stripAvg').textContent =
+    'Moyenne : ' + (avg !== null ? avg.toFixed(1) + ' / ' + mt.maxTG : '—');
+}
+
+function refreshRow(tr, s){
+  const t = totals(s);
+  const a = tr.querySelector('[data-t="t1"]');
+  const b = tr.querySelector('[data-t="t2"]');
+  const c = tr.querySelector('[data-t="tg"]');
+  if(a) a.textContent = fmt(t.t1);
+  if(b) b.textContent = fmt(t.t2);
+  if(c) c.textContent = fmt(t.tg);
+}
+
+function getStudent(id){
+  return state.classes[currentClass].students.find(s => s.id === id);
+}
+
+/* ======================================================
+   SAISIE DES POINTS
+====================================================== */
+document.getElementById('tbody').addEventListener('input', function(e){
+  const inp = e.target;
+  if(!inp.classList || !inp.classList.contains('g')) return;
+
+  const tr = inp.closest('tr');
+  const s = getStudent(tr.dataset.id);
+  if(!s) return;
+
+  const raw = inp.value.replace(',', '.').trim();
+  if(raw === ''){
+    s[inp.dataset.f] = null;
+  }else{
+    const n = parseFloat(raw);
+    s[inp.dataset.f] = isNaN(n) ? null : Math.max(0, n);
+  }
+
+  refreshRow(tr, s);
+  updateStrip();
+  save();
+});
+
+document.getElementById('tbody').addEventListener('focusout', function(e){
+  const inp = e.target;
+  if(!inp.classList || !inp.classList.contains('g')) return;
+  const tr = inp.closest('tr');
+  const s = getStudent(tr.dataset.id);
+  if(!s) return;
+  const v = s[inp.dataset.f];
+  inp.value = (v === null || v === undefined) ? '' : v;
+});
+
+document.getElementById('tbody').addEventListener('click', function(e){
+  const nameEl = e.target.closest('.sname');
+  if(nameEl) openStudent(nameEl.dataset.id);
+});
+
+/* ======================================================
+   AJOUT D'ÉLÈVES
+====================================================== */
+function openAdd(){
+  document.getElementById('newName').value = '';
+  document.getElementById('bulkNames').value = '';
+  openModal('addOverlay');
+  setTimeout(() => document.getElementById('newName').focus(), 320);
+}
+
+function addOne(){
+  const inp = document.getElementById('newName');
+  const name = inp.value.trim();
+  if(!name){ inp.focus(); return; }
+  addStudents([name]);
+  inp.value = '';
+  inp.focus();
+}
+
+function addBulk(){
+  const ta = document.getElementById('bulkNames');
+  const names = ta.value.split('\n').map(s => s.trim()).filter(Boolean);
+  if(!names.length){ ta.focus(); return; }
+  addStudents(names);
+  ta.value = '';
+  closeModal('addOverlay');
+}
+
+function addStudents(names){
+  const list = state.classes[currentClass].students;
+  names.forEach(n => list.push({
+    id: uid(), name: n,
+    p1: null, p2: null, e1: null,
+    p3: null, p4: null, e2: null
+  }));
+  save();
+  renderSheet();
+  toast(names.length > 1 ? names.length + ' élèves ajoutés' : 'Élève ajouté');
+}
+
+/* ======================================================
+   MODALE ÉLÈVE
+====================================================== */
+function openStudent(id){
+  editingId = id;
+  const s = getStudent(id);
+  if(!s) return;
+  document.getElementById('editName').value = s.name;
+  openModal('studentOverlay');
+  setTimeout(() => document.getElementById('editName').focus(), 320);
+}
+
+function saveStudent(){
+  const s = getStudent(editingId);
+  if(!s) return;
+  const v = document.getElementById('editName').value.trim();
+  if(!v) return;
+  s.name = v;
+  save();
+  renderSheet();
+  closeModal('studentOverlay');
+  toast('Nom modifié');
+}
+
+function deleteStudent(){
+  const s = getStudent(editingId);
+  if(!s) return;
+  if(!confirm('Supprimer « ' + s.name + ' » et toutes ses notes ?')) return;
+
+  const list = state.classes[currentClass].students;
+  const i = list.findIndex(x => x.id === editingId);
+  if(i > -1) list.splice(i, 1);
+  save();
+  renderSheet();
+  closeModal('studentOverlay');
+  toast('Élève supprimé');
+}
+
+/* ======================================================
+   MODALE COEFFICIENTS
+====================================================== */
+function openCoef(){
+  const c = getCoef(currentClass);
+  document.getElementById('cP1').value = c.p1;
+  document.getElementById('cP2').value = c.p2;
+  document.getElementById('cE1').value = c.e1;
+  document.getElementById('cP3').value = c.p3;
+  document.getElementById('cP4').value = c.p4;
+  document.getElementById('cE2').value = c.e2;
+  updateCoefTotals();
+  openModal('coefOverlay');
+}
+
+function readCoefForm(){
+  const g = id => {
+    const v = parseFloat(document.getElementById(id).value.replace(',', '.'));
+    return (isNaN(v) || v < 0) ? 0 : v;
+  };
+  return {
+    p1: g('cP1'), p2: g('cP2'), e1: g('cE1'),
+    p3: g('cP3'), p4: g('cP4'), e2: g('cE2')
+  };
+}
+
+function updateCoefTotals(){
+  const c = readCoefForm();
+  const t1 = c.p1 + c.p2 + c.e1;
+  const t2 = c.p3 + c.p4 + c.e2;
+  document.getElementById('cT1').textContent = fmt(t1);
+  document.getElementById('cT2').textContent = fmt(t2);
+  document.getElementById('cTG').textContent = fmt(t1 + t2);
+}
+
+['cP1','cP2','cE1','cP3','cP4','cE2'].forEach(id => {
+  document.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById(id);
+    if(el) el.addEventListener('input', updateCoefTotals);
+  });
+});
+
+/* Délégation : réagit aussi après injection dynamique */
+document.addEventListener('input', function(e){
+  if(e.target && ['cP1','cP2','cE1','cP3','cP4','cE2'].includes(e.target.id)){
+    updateCoefTotals();
+  }
+});
+
+function saveCoef(){
+  const c = readCoefForm();
+  /* Vérification : au moins un coefficient non nul */
+  if(c.p1 + c.p2 + c.e1 + c.p3 + c.p4 + c.e2 <= 0){
+    toast('Définissez au moins un coefficient');
+    return;
+  }
+  state.classes[currentClass].coef = c;
+  save();
+  renderSheet();
+  closeModal('coefOverlay');
+  toast('Coefficients enregistrés');
+}
+
+function resetCoef(){
+  document.getElementById('cP1').value = DEFAULT_COEF.p1;
+  document.getElementById('cP2').value = DEFAULT_COEF.p2;
+  document.getElementById('cE1').value = DEFAULT_COEF.e1;
+  document.getElementById('cP3').value = DEFAULT_COEF.p3;
+  document.getElementById('cP4').value = DEFAULT_COEF.p4;
+  document.getElementById('cE2').value = DEFAULT_COEF.e2;
+  updateCoefTotals();
+  toast('Barème par défaut restauré');
+}
+
+/* ======================================================
+   IMPRESSION D'UNE CLASSE
+====================================================== */
+function printClass(){
+  const students = state.classes[currentClass].students;
+  if(!students.length){
+    toast('Aucun élève à imprimer dans cette classe');
+    return;
+  }
+
+  const date = new Date().toLocaleDateString('fr-FR');
+  const avg = classAverage(students);
+  const coef = getCoef(currentClass);
+  const mt = maxTotals(currentClass);
+
+  let rows = '';
+  students.forEach((s, i) => {
+    const t = totals(s);
+    rows += '<tr>' +
+      '<td>' + (i + 1) + '</td>' +
+      '<td class="nom">' + esc(s.name) + '</td>' +
+      '<td>' + (s.p1 ?? '') + '</td>' +
+      '<td>' + (s.p2 ?? '') + '</td>' +
+      '<td>' + (s.e1 ?? '') + '</td>' +
+      '<td class="tot">' + fmt(t.t1) + '</td>' +
+      '<td>' + (s.p3 ?? '') + '</td>' +
+      '<td>' + (s.p4 ?? '') + '</td>' +
+      '<td>' + (s.e2 ?? '') + '</td>' +
+      '<td class="tot">' + fmt(t.t2) + '</td>' +
+      '<td class="tg">' + fmt(t.tg) + '</td>' +
+    '</tr>';
+  });
+
+  const html = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Cotation — ' + esc(currentClass) + '</title>' +
+  '<style>' +
+    '@page{size:A4 landscape;margin:10mm}' +
+    'body{font-family:Arial,Helvetica,sans-serif;font-size:10px;margin:0;padding:12px;color:#000}' +
+    'h1{font-size:15px;text-align:center;margin:0 0 3px;text-transform:uppercase;letter-spacing:1px}' +
+    'h2{font-size:12.5px;text-align:center;margin:0 0 3px;letter-spacing:.5px}' +
+    '.sub{text-align:center;font-size:9px;color:#444;margin:0 0 10px}' +
+    'table{width:100%;border-collapse:collapse}' +
+    'th,td{border:1px solid #333;padding:3px 4px;text-align:center;font-size:10px}' +
+    'th{background:#dcdcdc;font-weight:bold;font-size:9px;line-height:1.15}' +
+    'td.nom{text-align:left;font-weight:600}' +
+    'td.tot{font-weight:bold;background:#f2f2f2}' +
+    'td.tg{font-weight:bold;background:#e0e0e0}' +
+    '.footer{display:flex;justify-content:space-between;margin-top:38px}' +
+    '.footer div{width:40%;border-top:1px solid #333;padding-top:5px;text-align:center;font-size:9px}' +
+    '@media print{body{padding:0}}' +
+  '</style></head><body>' +
+    '<h1>Complexe Scolaire Saint Gabriel II</h1>' +
+    '<h2>Fiche de cotation — ' + esc(currentClass) + '</h2>' +
+    '<p class="sub">Année scolaire 2026-2027 • Prof. Steves ILUNGA • ' + date +
+      (avg !== null ? ' • Moyenne de la classe : ' + avg.toFixed(1) + ' / ' + mt.maxTG : '') + '</p>' +
+    '<table><thead><tr>' +
+      '<th style="width:28px">N°</th>' +
+      '<th style="width:150px">NOMS</th>' +
+      '<th>1è P<br>/' + fmt(coef.p1) + '</th>' +
+      '<th>2è P<br>/' + fmt(coef.p2) + '</th>' +
+      '<th>EXA<br>/' + fmt(coef.e1) + '</th>' +
+      '<th>TOT<br>/' + fmt(mt.max1) + '</th>' +
+      '<th>3è P<br>/' + fmt(coef.p3) + '</th>' +
+      '<th>4è P<br>/' + fmt(coef.p4) + '</th>' +
+      '<th>EXA<br>/' + fmt(coef.e2) + '</th>' +
+      '<th>TOT<br>/' + fmt(mt.max2) + '</th>' +
+      '<th>T.G<br>/' + fmt(mt.maxTG) + '</th>' +
+    '</tr></thead><tbody>' + rows + '</tbody></table>' +
+    '<div class="footer"><div>Signature du professeur</div><div>Signature du directeur</div></div>' +
+  '</body></html>';
+
+  const iframe = document.createElement('iframe');
+  iframe.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0;';
+  document.body.appendChild(iframe);
+  const doc = iframe.contentWindow.document;
+  doc.open();
+  doc.write(html);
+  doc.close();
+
+  setTimeout(() => {
+    try{
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+    }catch(err){
+      const w = window.open('', '_blank');
+      if(w){ w.document.write(html); w.document.close(); w.focus(); }
+    }
+    setTimeout(() => {
+      if(document.body.contains(iframe)) document.body.removeChild(iframe);
+    }, 1500);
+  }, 350);
+}
+
+/* ======================================================
+   MODALES
+====================================================== */
+function openModal(id){ document.getElementById(id).classList.add('show'); }
+function closeModal(id){ document.getElementById(id).classList.remove('show'); }
+
+function openMenu(){ openModal('menuOverlay'); }
+
+/* ======================================================
+   SAUVEGARDE / RESTAURATION
+====================================================== */
+function exportData(){
+  const blob = new Blob([JSON.stringify(state, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'cotation-SaintGabrielII-2026-2027.json';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 3000);
+  closeModal('menuOverlay');
+  toast('Sauvegarde exportée');
+}
+
+function importData(input){
+  const file = input.files && input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e){
+    try{
+      const d = JSON.parse(e.target.result);
+      if(!d || typeof d !== 'object' || !d.classes) throw new Error('format');
+      state = d;
+      CLASSES.forEach(c => {
+        if(!state.classes[c.name] || typeof state.classes[c.name] !== 'object'){
+          state.classes[c.name] = { coef:{ ...DEFAULT_COEF }, students: [] };
+        }
+        const cls = state.classes[c.name];
+        if(!Array.isArray(cls.students)) cls.students = [];
+        if(!cls.coef || typeof cls.coef !== 'object'){
+          cls.coef = { ...DEFAULT_COEF };
+        } else {
+          ['p1','p2','e1','p3','p4','e2'].forEach(k => {
+            const v = parseFloat(cls.coef[k]);
+            cls.coef[k] = (isNaN(v) || v < 0) ? DEFAULT_COEF[k] : v;
+          });
+        }
+      });
+      save();
+      renderClasses();
+      closeModal('menuOverlay');
+      toast('Importation réussie');
+    }catch(err){
+      alert("Fichier invalide. Veuillez choisir une sauvegarde exportée depuis cette application.");
+    }
+  };
+  reader.readAsText(file);
+  input.value = '';
+}
+
+function resetAll(){
+  if(!confirm('ATTENTION : toutes les notes et tous les élèves seront définitivement supprimés.\n\nContinuer ?')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  state = loadState();
+  save();
+  renderClasses();
+  closeModal('menuOverlay');
+  toast('Toutes les données ont été effacées');
+}
+
+/* ======================================================
+   DÉMARRAGE
+====================================================== */
+state = loadState();
+save();
+
+/* Empêche le zoom involontaire sur double-tap */
+let lastTouch = 0;
+document.addEventListener('touchend', function(e){
+  const now = Date.now();
+  if(now - lastTouch <= 300) e.preventDefault();
+  lastTouch = now;
+}, {passive:false});
+</script>
+</body>
+</html>
